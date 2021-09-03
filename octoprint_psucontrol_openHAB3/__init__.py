@@ -6,8 +6,8 @@ __license__ = "GNU Affero General Public License http://www.gnu.org/licenses/agp
 __copyright__ = "Copyright (C) 2021 Philipp Große - Released under terms of the AGPLv3 License"
 
 import octoprint.plugin
-import requests
 import base64
+import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
