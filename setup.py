@@ -3,10 +3,10 @@ import setuptools
 
 ########################################################################################################################
 
-plugin_identifier = "psucontrol_openHAB3"
+plugin_identifier = "psucontrol_openhab3"
 plugin_package = "octoprint_%s" % plugin_identifier
 plugin_name = "OctoPrint-PSUControl-openHAB3"
-plugin_version = "0.0.1"
+plugin_version = "1.0.0"
 plugin_description = "Adds openHAB3 support to OctoPrint-PSUControl as a sub-plugin"
 plugin_author = "Philipp Große"
 plugin_author_email = "philipp.grosse@protonmail.com"
