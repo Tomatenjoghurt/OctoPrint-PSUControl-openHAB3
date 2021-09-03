@@ -3,14 +3,14 @@ import setuptools
 
 ########################################################################################################################
 
-plugin_identifier = "psucontrol_homeassistant"
+plugin_identifier = "psucontrol_openHAB3"
 plugin_package = "octoprint_%s" % plugin_identifier
-plugin_name = "OctoPrint-PSUControl-HomeAssistant"
-plugin_version = "1.0.4"
-plugin_description = "Adds Home Assistant support to OctoPrint-PSUControl as a sub-plugin"
-plugin_author = "Erik de Keijzer"
-plugin_author_email = "erik.de.keijzer@gmail.com"
-plugin_url = "https://github.com/edekeijzer/OctoPrint-PSUControl-HomeAssistant"
+plugin_name = "OctoPrint-PSUControl-openHAB3"
+plugin_version = "0.0.1"
+plugin_description = "Adds openHAB3 support to OctoPrint-PSUControl as a sub-plugin"
+plugin_author = "Philipp Große"
+plugin_author_email = "philipp.grosse@protonmail.com"
+plugin_url = "https://github.com/Tomatenjoghurt/OctoPrint-PSUControl-openHAB3"
 plugin_license = "AGPLv3"
 plugin_additional_data = []
 

@@ -1,17 +1,18 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-__author__ = "Erik de Keijzer <erik.de.keijzer@gmail.com>"
+__author__ = "Philipp Große <philipp.grosse@protonmail.com>"
 __license__ = "GNU Affero General Public License http://www.gnu.org/licenses/agpl.html"
-__copyright__ = "Copyright (C) 2021 Erik de Keijzer - Released under terms of the AGPLv3 License"
+__copyright__ = "Copyright (C) 2021 Philipp Große - Released under terms of the AGPLv3 License"
 
 import octoprint.plugin
 import requests
+import base64
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-class PSUControl_HomeAssistant(octoprint.plugin.StartupPlugin,
+class PSUControl_openHAB3(octoprint.plugin.StartupPlugin,
                          octoprint.plugin.RestartNeedingPlugin,
                          octoprint.plugin.TemplatePlugin,
                          octoprint.plugin.SettingsPlugin):
@@ -23,7 +24,7 @@ class PSUControl_HomeAssistant(octoprint.plugin.StartupPlugin,
         return dict(
             address = '',
             api_key = '',
-            entity_id = '',
+            item_name = '',
             verify_certificate = True,
         )
 
@@ -54,9 +55,16 @@ class PSUControl_HomeAssistant(octoprint.plugin.StartupPlugin,
         psucontrol_helpers['register_plugin'](self)
 
     def send(self, cmd, data=None):
-        url = self.config['address'] + '/api' + cmd
+        url = self.config['address'] + '/rest/items/' + cmd
 
-        headers = dict(Authorization='Bearer ' + self.config['api_key'])
+        if self.config['basic_username']:
+            credentials = self.config['basic_username'] + ':' + self.config['basic_password']
+            # Standard Base64 Encoding
+            encodedBytes = base64.b64encode(credentials.encode("utf-8"))
+            basicAuth = str(encodedBytes, "utf-8")
+            headers = dict(Authorization='Authorization: Basic : ' + basicAuth)
+        else:
+            headers = dict(Authorization='X-OPENHAB-TOKEN: ' + self.config['api_key'])    
 
         response = None
         verify_certificate = self.config['verify_certificate']
@@ -82,51 +90,51 @@ class PSUControl_HomeAssistant(octoprint.plugin.StartupPlugin,
                 self._logger.warning("Server returned 401 Unauthorized. Check API key.")
                 response = None
             elif response.status_code == 404:
-                self._logger.warning("Server returned 404 Not Found. Check Entity ID.")
+                self._logger.warning("Server returned 404 Not Found. Check Item Name.")
                 response = None
 
         return response
 
     def change_psu_state(self, state):
-        _entity_id = self.config['entity_id']
-        _domainsplit = _entity_id.find('.')
-        if _domainsplit < 0:
-            _domain = 'switch'
-            _entity_id = _domain + '.' + _entity_id
-        else:
-            _domain = _entity_id[:_domainsplit]
+        _item_name = self.config['item_name']
+        # _domainsplit = _item_name.find('.')
+        # if _domainsplit < 0:
+        #     _domain = 'switch'
+        #     _item_name = _domain + '.' + _item_name
+        # else:
+        #     _domain = _item_name[:_domainsplit]
 
-        if state:
-            cmd = '/services/' + _domain + '/turn_' + state
-        else:
-            cmd = '/services/' + _domain + '/toggle'
-        data = '{"entity_id":"' + _entity_id + '"}'
+        # if state:
+        #    cmd = _item_name + '/state'
+        # else:
+        cmd = _item_name
+        data = state
         self.send(cmd, data)
 
     def turn_psu_on(self):
         self._logger.debug("Switching PSU On")
-        self.change_psu_state('on')
+        self.change_psu_state('ON')
 
     def turn_psu_off(self):
         self._logger.debug("Switching PSU Off")
-        self.change_psu_state('off')
+        self.change_psu_state('OFF')
 
     def get_psu_state(self):
-        _entity_id = self.config['entity_id']
-        _domainsplit = _entity_id.find('.')
-        if _domainsplit < 0:
-            _entity_id = 'switch.' + _entity_id
+        _item_name = self.config['item_name']
+        # _domainsplit = _item_name.find('.')
+        # if _domainsplit < 0:
+        #     _item_name = 'switch.' + _item_name
 
-        cmd = '/states/' + _entity_id
+        cmd = _item_name + '/state'
 
         response = self.send(cmd)
         if not response:
             return False
-        data = response.json()
+        data = response.text()
 
         status = None
         try:
-            status = (data['state'] == 'on')
+            status = (data == 'ON')
         except KeyError:
             pass
 
@@ -153,27 +161,27 @@ class PSUControl_HomeAssistant(octoprint.plugin.StartupPlugin,
 
     def get_update_information(self):
         return dict(
-            psucontrol_homeassistant=dict(
-                displayName="PSU Control - Home Assistant",
+            psucontrol_openhab3=dict(
+                displayName="PSU Control - openHAB3",
                 displayVersion=self._plugin_version,
 
                 # version check: github repository
                 type="github_release",
-                user="edekeijzer",
-                repo="OctoPrint-PSUControl-HomeAssistant",
+                user="Tomatenjoghurt",
+                repo="OctoPrint-PSUControl-openHAB3",
                 current=self._plugin_version,
 
                 # update method: pip w/ dependency links
-                pip="https://github.com/edekeijzer/OctoPrint-PSUControl-HomeAssistant/archive/{target_version}.zip"
+                pip="https://github.com/Tomatenjoghurt/OctoPrint-PSUControl-openHAB3/archive/{target_version}.zip"
             )
         )
 
-__plugin_name__ = "PSU Control - Home Assistant"
+__plugin_name__ = "PSU Control - openHAB3"
 __plugin_pythoncompat__ = ">=3,<4"
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = PSUControl_HomeAssistant()
+    __plugin_implementation__ = PSUControl_openHAB3()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
