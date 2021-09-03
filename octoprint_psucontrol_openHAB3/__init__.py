@@ -64,7 +64,7 @@ class PSUControl_openHAB3(octoprint.plugin.StartupPlugin,
             # Standard Base64 Encoding
             encodedBytes = base64.b64encode(credentials.encode("utf-8"))
             basicAuth = str(encodedBytes, "utf-8")
-            headers = dict(Authorization='Authorization: Basic : ' + basicAuth)
+            headers = dict(Authorization='Authorization: Basic ' + basicAuth)
         else:
             headers = dict(Authorization='X-OPENHAB-TOKEN: ' + self.config['api_key'])    
 
