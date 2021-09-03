@@ -24,6 +24,8 @@ class PSUControl_openHAB3(octoprint.plugin.StartupPlugin,
         return dict(
             address = '',
             api_key = '',
+            basic_username = '',
+            basic_password = '',
             item_name = '',
             verify_certificate = True,
         )
