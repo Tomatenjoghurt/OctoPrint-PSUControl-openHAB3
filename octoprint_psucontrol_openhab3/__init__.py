@@ -12,7 +12,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-class PSUControl_openHAB3(octoprint.plugin.StartupPlugin,
+class PSUControl_openhab3(octoprint.plugin.StartupPlugin,
                          octoprint.plugin.RestartNeedingPlugin,
                          octoprint.plugin.TemplatePlugin,
                          octoprint.plugin.SettingsPlugin):
@@ -183,7 +183,7 @@ __plugin_pythoncompat__ = ">=3,<4"
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = PSUControl_openHAB3()
+    __plugin_implementation__ = PSUControl_openhab3()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
