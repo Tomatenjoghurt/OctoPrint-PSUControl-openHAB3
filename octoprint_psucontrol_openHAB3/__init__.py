@@ -59,7 +59,7 @@ class PSUControl_openHAB3(octoprint.plugin.StartupPlugin,
     def send(self, cmd, data=None):
         url = self.config['address'] + '/rest/items/' + cmd
 
-        if self.config['basic_username']:
+        if ( self.config['authorizationMethod'] == 'BASIC' ):
             credentials = self.config['basic_username'] + ':' + self.config['basic_password']
             # Standard Base64 Encoding
             encodedBytes = base64.b64encode(credentials.encode("utf-8"))
