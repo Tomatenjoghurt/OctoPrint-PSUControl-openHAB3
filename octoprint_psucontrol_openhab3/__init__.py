@@ -23,6 +23,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
     def get_settings_defaults(self):
         return dict(
             address = '',
+            authorizationMethod = '',
             api_key = '',
             basic_username = '',
             basic_password = '',

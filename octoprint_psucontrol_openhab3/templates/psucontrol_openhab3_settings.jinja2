@@ -62,10 +62,10 @@
             <label class="checkbox">
             <input type="checkbox" data-bind="checked: settings.plugins.psucontrol_openhab3.verify_certificate"> Verify certificate
             </label>
-            <!-- ko if: settings.plugins.psucontrol_openhab3.verify_certificate -->
+            <!-- ko if: settings.plugins.psucontrol_openhab3.verify_certificate() -->
             <span class="help-block">Verify TLS certificate and do not connect on certificate issues.</span>
             <!-- /ko -->
-            <!-- ko ifnot: settings.plugins.psucontrol_openhab3.verify_certificate -->
+            <!-- ko ifnot: settings.plugins.psucontrol_openhab3.verify_certificate() -->
             <span class="help-block">Do not verify TLS certificate.</span>
             <!-- /ko -->
         </div>
