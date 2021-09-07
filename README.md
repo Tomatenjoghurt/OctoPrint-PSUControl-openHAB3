@@ -1,5 +1,5 @@
 # OctoPrint PSU Control - openHAB3
-Adds openHAb3 support to OctoPrint-PSUControl as a sub-plugin.
+Adds openHAB3 support to OctoPrint-PSUControl as a sub-plugin.
 Massive Credits go to the original plugin for Home Assistant:
 https://github.com/edekeijzer/OctoPrint-PSUControl-HomeAssistant
 
