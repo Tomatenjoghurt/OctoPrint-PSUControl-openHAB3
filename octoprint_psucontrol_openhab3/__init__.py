@@ -135,7 +135,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
         response = self.send(cmd)
         if not response:
             return False
-        data = response.text()
+        data = response.text
 
         status = None
         try:
