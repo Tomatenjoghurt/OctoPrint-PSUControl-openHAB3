@@ -90,7 +90,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
                 self._logger.debug("cmd={}, status_code={}, text={}".format(cmd, response.status_code, response.text))
 
             if response.status_code == 401:
-                self._logger.warning("Server returned 401 Unauthorized. Check API key.")
+                self._logger.warning("Server returned 401 Unauthorized. Check API key or Username/Password.")
                 response = None
             elif response.status_code == 404:
                 self._logger.warning("Server returned 404 Not Found. Check Item Name.")
