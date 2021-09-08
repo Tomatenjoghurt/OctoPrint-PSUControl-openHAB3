@@ -59,7 +59,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
 
     def send(self, cmd, data=None):
         url = self.config['address'] + '/rest/items/' + cmd
-
+        # If using basic Auth, build Basic Auth Header
         if ( self.config['authorizationMethod'] == 'BASIC' ):
             credentials = self.config['basic_username'] + ':' + self.config['basic_password']
             # Standard Base64 Encoding
@@ -67,12 +67,14 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
             basicAuth = str(encodedBytes, "utf-8")
             headers = dict(Authorization='Basic ' + basicAuth)
         else:
+            # otherwise, build Header for Token based Authorization
             headers = dict(Authorization='X-OPENHAB-TOKEN: ' + self.config['api_key'])    
-
+        # add other mandatory Headers
         headers['Content-Type'] = 'text/plain'
         headers['accept'] = '*/*'
         response = None
         verify_certificate = self.config['verify_certificate']
+        # fire requests to openHAB3
         try:
             if data:
                 response = requests.post(url, headers=headers, data=data, verify=verify_certificate)
@@ -97,21 +99,11 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
             elif response.status_code == 404:
                 self._logger.warning("Server returned 404 Not Found. Check Item Name.")
                 response = None
-
         return response
 
     def change_psu_state(self, state):
         _item_name = self.config['item_name']
-        # _domainsplit = _item_name.find('.')
-        # if _domainsplit < 0:
-        #     _domain = 'switch'
-        #     _item_name = _domain + '.' + _item_name
-        # else:
-        #     _domain = _item_name[:_domainsplit]
-
-        # if state:
-        #    cmd = _item_name + '/state'
-        # else:
+        # when setting the state, cmd simply equals item_name
         cmd = _item_name
         data = state
         self.send(cmd, data)
@@ -126,10 +118,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
 
     def get_psu_state(self):
         _item_name = self.config['item_name']
-        # _domainsplit = _item_name.find('.')
-        # if _domainsplit < 0:
-        #     _item_name = 'switch.' + _item_name
-
+        #when querying, we need to select the /state of the item_name
         cmd = _item_name + '/state'
 
         response = self.send(cmd)
