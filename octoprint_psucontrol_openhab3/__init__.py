@@ -70,6 +70,7 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
             headers = dict(Authorization='X-OPENHAB-TOKEN: ' + self.config['api_key'])    
 
         headers['Content-Type'] = 'text/plain'
+        headers['accept'] = '*/*'
         response = None
         verify_certificate = self.config['verify_certificate']
         try:
