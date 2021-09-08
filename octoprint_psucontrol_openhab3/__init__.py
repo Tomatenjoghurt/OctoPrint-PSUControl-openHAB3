@@ -85,9 +85,9 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
             self._logger.exception("Exception while making API call")
         else:
             if data:
-                self._logger.debug("cmd={}, data={}, status_code={}, text={}".format(cmd, data, response.status_code, response.text))
+                self._logger.debug("cmd={}, headers{}, data={}, status_code={}, text={}".format(cmd, headers, data, response.status_code, response.text))
             else:
-                self._logger.debug("cmd={}, status_code={}, text={}".format(cmd, response.status_code, response.text))
+                self._logger.debug("cmd={}, headers{}, status_code={}, text={}".format(cmd, headers, response.status_code, response.text))
 
             if response.status_code == 401:
                 self._logger.warning("Server returned 401 Unauthorized. Check API key or Username/Password.")
