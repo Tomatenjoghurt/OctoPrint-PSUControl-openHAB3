@@ -68,7 +68,10 @@ class psucontrol_openhab3(octoprint.plugin.StartupPlugin,
             headers = dict(Authorization='Basic ' + basicAuth)
         else:
             # otherwise, build Header for Token based Authorization
-            headers = dict(Authorization='X-OPENHAB-TOKEN: ' + self.config['api_key'])    
+            token = self.config['api_key'] + ':'
+            encodedBytes = base64.b64encode(token.encode("utf-8"))
+            basicAuth = str(encodedBytes, "utf-8")
+            headers = dict(Authorization='Basic ' + basicAuth)    
         # add other mandatory Headers
         headers['Content-Type'] = 'text/plain'
         headers['accept'] = '*/*'
