@@ -12,10 +12,10 @@ https://github.com/edekeijzer/OctoPrint-PSUControl-HomeAssistant
 * Enter the URL of your openHAB3 Installation
 * Go to your openHAB3 Administration Site
 * At the bottom left, click on your Username
-* Scroll down to "API Tokens" and click *Create new API Token*, enter your Admin Username, Admin Password and give the token a name (suggestion: OctoPrint PSUControl) and click *OK*
+* Scroll down to "API Tokens" and click *Create new API Token*, enter your Admin Username, Admin Password and give the token a name (suggestion: OctoPrint PSUControl) and click *OK*. For more Information see openHAB documentation: https://www.openhab.org/docs/configuration/apitokens.html
 * Copy the token and paste it into the *Access token* field in the plugin settings
-* Alternatively, you can use Basic Authorization (e.g. your Username and Password for openHAB3). Careful, you'll may need to enable *Allow Basic Authentication* in Settings -> API Settings in openHAB3.
-* At *Item Name* enter the Name of the openHAB3 Item you want to control (for example: *my_smart_outlet*). IMPORTANT: we need the Item Name, not the Label! This can be checked when going to Items -> *your_item* -> Edit and see the Name of the Item.
+* Alternatively, you can use Basic Authorization (e.g. your Username and Password for openHAB3). Careful, you'll need to enable *Allow Basic Authentication* in Settings -> API Settings in openHAB3.
+* At *Item Name* enter the Name of the openHAB3 Item you want to control (for example: *my_smart_outlet*). _IMPORTANT_: we need the Item Name, not the Label! This can be checked when going to Items -> *your_item* -> Edit and see the Name of the Item.
 * If your openHAB3 installation is running HTTPS with a self-signed certificate, uncheck the *Verify certificate* option
 
 ## FAQ
