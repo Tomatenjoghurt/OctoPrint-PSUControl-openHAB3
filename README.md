@@ -20,7 +20,7 @@ https://github.com/edekeijzer/OctoPrint-PSUControl-HomeAssistant
 
 ## FAQ
 ### The plugin is not working! / No actions to the device are done!
-Check if you really used the correct settings - Portnumber, Item Name (not Label!). Otherwise please see down below at support.
+Check if you really used the correct settings - Portnumber, Item Name (not Label!). You may need to use your openHAB server's IP address instead of its hostname. Otherwise please see down below at support.
 
 ### Help, my openHAB3 Instance is behind a proxy (NGINX, traefik, caddy), which cares for Authorization!
 Just use the Basic Authorization of your proxy in the settings.
